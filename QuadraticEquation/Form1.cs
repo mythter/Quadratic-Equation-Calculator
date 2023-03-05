@@ -54,6 +54,11 @@ namespace QuadraticEquation
                 MessageBox.Show("Не все поля заполнены!", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if (A == "-" || B == "-" || C == "-" || A == "." || B == "." || C == "." || A == "," || B == "," || C == ",")
+            {
+                MessageBox.Show("Поля заполнены некорректно!", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             if (Radio1)
             {
