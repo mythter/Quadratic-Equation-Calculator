@@ -1,9 +1,9 @@
-/*
-Файл: Form1.cs
-Лабораторная робота № 2
-Автор: Положий А. С.
-Тема: Розробка та дослідження програми вирішення квадратного рівняння.
-Дата створення: 23.02.2023
+п»ї/*
+Р¤Р°Р№Р»: Form1.cs
+Р›Р°Р±РѕСЂР°С‚РѕСЂРЅР°СЏ СЂРѕР±РѕС‚Р° в„– 2
+РђРІС‚РѕСЂ: РџРѕР»РѕР¶РёР№ Рђ. РЎ.
+РўРµРјР°: Р РѕР·СЂРѕР±РєР° С‚Р° РґРѕСЃР»С–РґР¶РµРЅРЅСЏ РїСЂРѕРіСЂР°РјРё РІРёСЂС–С€РµРЅРЅСЏ РєРІР°РґСЂР°С‚РЅРѕРіРѕ СЂС–РІРЅСЏРЅРЅСЏ.
+Р”Р°С‚Р° СЃС‚РІРѕСЂРµРЅРЅСЏ: 23.02.2023
 */
 
 using BuisnessLogic;
@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using UI;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using TextBox = System.Windows.Forms.TextBox;
 
 namespace QuadraticEquation
 {
@@ -51,12 +52,7 @@ namespace QuadraticEquation
         {
             if (string.IsNullOrEmpty(A) || string.IsNullOrEmpty(B) || string.IsNullOrEmpty(C))
             {
-                MessageBox.Show("Не все поля заполнены!", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (A == "-" || B == "-" || C == "-" || A == "." || B == "." || C == "." || A == "," || B == "," || C == ",")
-            {
-                MessageBox.Show("Поля заполнены некорректно!", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("РќРµ РІСЃРµ РїРѕР»СЏ Р·Р°РїРѕР»РЅРµРЅС‹!", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -68,9 +64,17 @@ namespace QuadraticEquation
                     B = B.Replace(",", ".");
                 if (C.Contains(','))
                     C = C.Replace(",", ".");
-                double a = double.Parse(A, NumberStyles.Any, CultureInfo.InvariantCulture);
-                double b = double.Parse(B, NumberStyles.Any, CultureInfo.InvariantCulture);
-                double c = double.Parse(C, NumberStyles.Any, CultureInfo.InvariantCulture);
+
+                double a, b, c;
+
+                if (!double.TryParse(A, NumberStyles.Any, CultureInfo.InvariantCulture, out a) ||
+                    !double.TryParse(B, NumberStyles.Any, CultureInfo.InvariantCulture, out b) ||
+                    !double.TryParse(C, NumberStyles.Any, CultureInfo.InvariantCulture, out c))
+                {
+                    MessageBox.Show("РџРѕР»СЏ Р·Р°РїРѕР»РЅРµРЅС‹ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕ!", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 double D = Math.Pow(b, 2) - 4 * a * c;
 
                 if (a == 0 && b == 0)
@@ -91,14 +95,14 @@ namespace QuadraticEquation
                 else if (b == 0)
                 {
                     if (c > 0)
-                        X1 = X2 = "Ошибка! Корень < 0";
+                        X1 = X2 = "РћС€РёР±РєР°! РљРѕСЂРµРЅСЊ < 0";
                     else
                         X1 = X2 = Math.Sqrt(-c / a).ToString();
                     return;
                 }
 
                 if (D < 0)
-                    X1 = X2 = "Дискриминант < 0";
+                    X1 = X2 = "Р”РёСЃРєСЂРёРјРёРЅР°РЅС‚ < 0";
                 else if (D == 0)
                     X1 = X2 = (-b / (2 * a)).ToString();
                 else
@@ -113,7 +117,14 @@ namespace QuadraticEquation
             }
             else
             {
-                CalcAttempted?.Invoke(this, EventArgs.Empty);
+                try
+                {
+                    CalcAttempted?.Invoke(this, EventArgs.Empty);
+                }
+                catch
+                {
+                    MessageBox.Show("РџРѕР»СЏ Р·Р°РїРѕР»РЅРµРЅС‹ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕ!", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
@@ -125,9 +136,17 @@ namespace QuadraticEquation
                 B = B.Replace(",", ".");
             if (C.Contains(','))
                 C = C.Replace(",", ".");
-            double a = double.Parse(A, NumberStyles.Any, CultureInfo.InvariantCulture);
-            double b = double.Parse(B, NumberStyles.Any, CultureInfo.InvariantCulture);
-            double c = double.Parse(C, NumberStyles.Any, CultureInfo.InvariantCulture);
+
+            double a, b, c;
+
+            if (!double.TryParse(A, NumberStyles.Any, CultureInfo.InvariantCulture, out a) ||
+                !double.TryParse(B, NumberStyles.Any, CultureInfo.InvariantCulture, out b) ||
+                !double.TryParse(C, NumberStyles.Any, CultureInfo.InvariantCulture, out c))
+            {
+                MessageBox.Show("РџРѕР»СЏ Р·Р°РїРѕР»РЅРµРЅС‹ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕ!", "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             double D = Math.Pow(b, 2) - 4 * a * c;
 
             if (a == 0 && b == 0)
@@ -148,14 +167,14 @@ namespace QuadraticEquation
             else if (b == 0)
             {
                 if (c > 0)
-                    X1 = X2 = "Ошибка! Корень < 0";
+                    X1 = X2 = "РћС€РёР±РєР°! РљРѕСЂРµРЅСЊ < 0";
                 else
                     X1 = X2 = Math.Sqrt(-c / a).ToString();
                 return;
             }
 
             if (D < 0)
-                X1 = X2 = "Дискриминант < 0";
+                X1 = X2 = "Р”РёСЃРєСЂРёРјРёРЅР°РЅС‚ < 0";
             else if (D == 0)
                 X1 = X2 = (-b / (2 * a)).ToString();
             else
@@ -174,30 +193,17 @@ namespace QuadraticEquation
         {
             if (Char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back || e.KeyChar == '-' || e.KeyChar == '.' || e.KeyChar == ',')
             {
-                string a = ATextBox.Text;
-                string b = BTextBox.Text;
-                string c = CTextBox.Text;
+                TextBox textBox = (TextBox)sender;
+                string s = textBox.Text;
 
                 if (e.KeyChar == '.' || e.KeyChar == ',')
                 {
-                    if ((a.Contains(".") || a.Contains(",") || a.Length == 0) && ATextBox.Focused)
-                        e.KeyChar = (char)Keys.None;
-                    if ((b.Contains(".") || b.Contains(",") || b.Length == 0) && BTextBox.Focused)
-                        e.KeyChar = (char)Keys.None;
-                    if ((c.Contains(".") || c.Contains(",") || c.Length == 0) && CTextBox.Focused)
+                    if (s.Contains(".") || s.Contains(",") || s.Length == 0 || (s.Length == 1 && s[0] == '-'))
                         e.KeyChar = (char)Keys.None;
                 }
                 if (e.KeyChar == '-')
                 {
-                    a = ATextBox.Text;
-                    b = BTextBox.Text;
-                    c = CTextBox.Text;
-
-                    if (a.Length > 0 && ATextBox.Focused)
-                        e.KeyChar = (char)Keys.None;
-                    if (b.Length > 0 && BTextBox.Focused)
-                        e.KeyChar = (char)Keys.None;
-                    if (c.Length > 0 && CTextBox.Focused)
+                    if (s.Length > 0 && ATextBox.Focused)
                         e.KeyChar = (char)Keys.None;
                 }
             }

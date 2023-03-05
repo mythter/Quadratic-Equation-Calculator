@@ -30,7 +30,7 @@ namespace QuadraticEquation.Tests
         }
 
         [TestMethod]
-        public void Calc_1_3_2_Minus1Minus2Returned()
+        public void Calc_1_3_2_Minus1andMinus2Returned()
         {
             var user = new DummyUser();
             var presenter = new Presenter(user);
