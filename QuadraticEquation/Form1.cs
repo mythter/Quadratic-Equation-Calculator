@@ -203,7 +203,7 @@ namespace QuadraticEquation
                 }
                 if (e.KeyChar == '-')
                 {
-                    if (s.Length > 0 && ATextBox.Focused)
+                    if (s.Length > 0)
                         e.KeyChar = (char)Keys.None;
                 }
             }
